@@ -35,7 +35,7 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
     let initialBoard = [];
     for (let i=0; i < nrows; i++){
       initialBoard.push(Array.from({length: ncols}, () => (
-        Math.random()*1 < chanceLightStartsOn ? 't' : 'f')
+        Math.random()*1 < chanceLightStartsOn ? true : false)
       ))
     }
     return initialBoard;
@@ -48,7 +48,7 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
     for (i = 0; i < board.length; i ++){
       const row = board[i];
       for (j = 0; j < row.length; j++){
-        if (row[j] === "t") return false;
+        if (row[j] === true) return false;
       }
     }
     return true; 
@@ -67,10 +67,16 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
       };
 
       // TODO: Make a (deep) copy of the oldBoard
-
+      const oldBoardCopy = oldBoard.map(row => [...row])
       // TODO: in the copy, flip this cell and the cells around it
+      flipCell(y,x, oldBoardCopy);
+      flipCell(y+1,x, oldBoardCopy);
+      flipCell(y-1,x, oldBoardCopy);
+      flipCell(y,x+1, oldBoardCopy);
+      flipCell(y,x-1, oldBoardCopy);
 
       // TODO: return the copy
+      return oldBoardCopy
     });
   }
 
