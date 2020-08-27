@@ -36,7 +36,6 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
     console.log("createBoard()")
     let initialBoard = [];
     for (let i = 0; i < nrows; i++) {
-      console.log("createBoard() starts nrow")
       initialBoard.push(Array.from({ length: ncols }, () => (
         Math.random() * 1 < chanceLightStartsOn ? true : false)
       ))
@@ -44,15 +43,15 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
     return initialBoard;
   }
 
+
   /**Return a boolean indicating whether the player win */
-  function hasWon(board) {
+  function hasWon() {
     console.log("hasWon starts nrow")
 
     for (let i = 0; i < board.length; i++) {
-      console.log("createBoard() starts nrow")
-      const row = board[i];
-      for (let j = 0; j < row.length; j++) {
-        console.log("createBoard() starts nrow")
+      
+      for (let j = 0; j < board[i].length; j++) {
+
         if (row[j] === true) return false;
       }
     }
@@ -60,7 +59,7 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   }
 
   function flipCellsAround(coord) {
-    console.log("flipCellsAround() starts nrow")
+    console.log("flipCellsAround() ran")
     setBoard(oldBoard => {
       const [y, x] = coord.split("-").map(Number);
 
@@ -68,7 +67,6 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
         // if this coord is actually on board, flip it
 
         if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
-          console.log("flipCellsAround() inside loop nrow")
           boardCopy[y][x] = !boardCopy[y][x];
         }
       };
@@ -86,29 +84,25 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
       return oldBoardCopy
     });
   }
-
+  
   // if the game is won, just show a winning msg & render nothing else
-  if (hasWon() === true) {
-    console.log("flipCellsAround() inside loop nrow")
+  if (hasWon()) {
     return (<p>"You've won!"</p>);
   }
+  
 
   // make table board
   const newBoard = [];
   for (let i = 0; i < board.length; i++) {
-    console.log("this loop newBoard start")
-    const row = board[i];
+    const row = [];
     for (let j = 0; j < board[i].length; j++) {
-      console.log("this loop start")
       const isLit = board[i][j];
-      const cellCoord = [i]-[j];
+      const cellCoord = `${i}-${j}`; 
 
-      row.push(<td><Cell flipCellsAroundMe={() => flipCellsAround({cellCoord})} isLit={isLit} /></td>)
-      //row.push(<td><Cell flipCellsAround={cellCoord} isLit={isLit} /></td>)
+      row.push(<td><Cell flipCellsAroundMe={flipCellsAround} coord={cellCoord} isLit={isLit} /></td>)
 
     }
     newBoard.push(<tr>{row}</tr>);
-    console.log("newBoard looks like this")
     
   }
 
@@ -118,9 +112,9 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
 
 
 Board.defaultProps = {
-  nrows: 4,
-  ncols: 4,
-  chanceLightStartsOn: .1 
+  nrows: 5,
+  ncols: 7,
+  chanceLightStartsOn: 0.1
 }
 
 export default Board;
