@@ -20,3 +20,4 @@ function Cell({ flipCellsAroundMe, isLit }) {
 }
 
 export default Cell;
+
