@@ -93,7 +93,7 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
     for (let j = 0; j < board[i].length; j++) {
       const isLit = board[i][j];
       const cellCoord = `${i}-${j}`; 
-      row.push(<td><Cell flipCellsAroundMe={flipCellsAround} coord={cellCoord} isLit={isLit} /></td>)
+      row.push(<Cell flipCellsAroundMe={flipCellsAround} coord={cellCoord} isLit={isLit} />)
     }
     newBoard.push(<tr>{row}</tr>);
   }
